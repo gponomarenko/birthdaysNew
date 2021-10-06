@@ -3,7 +3,7 @@
   "solution": {
     "name": "birthdays-client-side-solution",
     "id": "0bf1145c-63e9-4517-9a5f-657db26aedce",
-    "version": "1.0.0.7",
+    "version": "1.0.0.8",
     "includeClientSideAssets": true,
     "isDomainIsolated": false,
     "developer": {
