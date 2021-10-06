@@ -126,7 +126,7 @@ export const BirthDays: React.FunctionComponent<IBirthDaysProps> = (props) => {
           <div className={ styles.row }>
             <BirthDaysCard
               imageUrl={TestImages.personaMale}
-              fullName="Jacob"
+              fullName="Jacobs"
               jobTitle="CEO"
               birthday="May 12th"
               EMail="me@sp.com"
