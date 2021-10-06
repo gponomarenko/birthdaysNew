@@ -3,7 +3,8 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
+  PropertyPaneDropdown
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
@@ -15,6 +16,7 @@ import { sp } from "@pnp/sp/presets/all";
 
 export interface IBirthDaysWebPartProps {
   description: string;
+  filterBirthdays: string;
 }
 
 export default class BirthDaysWebPart extends BaseClientSideWebPart<IBirthDaysWebPartProps> {
@@ -37,6 +39,7 @@ export default class BirthDaysWebPart extends BaseClientSideWebPart<IBirthDaysWe
       BirthDays,
       {
         description: this.properties.description,
+        filterValue: this.properties.filterBirthdays,
         context: this.context
       }
     );
@@ -65,6 +68,14 @@ export default class BirthDaysWebPart extends BaseClientSideWebPart<IBirthDaysWe
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel
+                }),
+                PropertyPaneDropdown('filterBirthdays', {
+                  label: 'Dropdown',
+                  selectedKey: 'NearestBirthdays',
+                  options: [
+                    { key: 'NearestBirthdays', text: 'Nearest birthdays' },
+                    { key: 'ActualMonthBirthdays', text: 'Birthdays in the actual month' }
+                  ]
                 })
               ]
             }

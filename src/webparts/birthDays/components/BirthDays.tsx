@@ -69,13 +69,6 @@ export const BirthDays: React.FunctionComponent<IBirthDaysProps> = (props) => {
     const end = todayMs + 86400000*5;
     const dayToBeChecked = new Date(birthday + "-" + today.getFullYear()).getTime();
 
-    // function myTime(actual) {
-    //   const date = new Date(actual);
-    //   return date.toString();
-    // }
-
-    // console.log("start: ", myTime(start), "today: ", myTime(today), "end: ", myTime(end), "check: ", dayToBeChecked, myTime(dayToBeChecked));
-
     return dayToBeChecked >= start && dayToBeChecked <= end;
   }, []);
 
@@ -86,18 +79,28 @@ export const BirthDays: React.FunctionComponent<IBirthDaysProps> = (props) => {
     return +date === +month;
   };
 
-  const filteredCloseBirthdays = React.useMemo(
+  const filteredNearestBirthdays = React.useMemo(
     () => employees.filter(person => checkIfAnyBirthdayCloseToNow(person.birthdayEmployee)), [employees]);
 
   const filteredActualMonth = React.useMemo(
     () => employees.filter(person => checkIfActualMonth(person.birthdayEmployee)), [employees]);
+  
+  let filteredBirthdays: any[];
 
+  if (props.filterValue === 'NearestBirthdays') {
+    filteredBirthdays = filteredNearestBirthdays;
+  } else if (props.filterValue === 'ActualMonthBirthdays') {
+    filteredBirthdays = filteredActualMonth;
+  } 
+
+  console.log(props, 'employees', employees);
+  
     return (
       <div className={ styles.birthDays }>
         <div className={ styles.container }>
           {isLoaded
            ? <>
-              {filteredCloseBirthdays.map(person => {
+              {filteredBirthdays.length ? filteredBirthdays.map(person => {
                 return (
                   <div className={ styles.row }>
                     <BirthDaysCard
@@ -109,7 +112,7 @@ export const BirthDays: React.FunctionComponent<IBirthDaysProps> = (props) => {
                     />
                   </div>
                 );
-              })}
+              }) : ""}
             </>
            : <SpinnerBasicExample />
           }
